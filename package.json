@@ -9,7 +9,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "lint:fix": "eslint . --ext .ts,.html --fix",
-    "format": "prettier --write \"src/**/*.{ts,html,scss,json}\""
+    "format": "prettier --write \"src/**/*.{ts,html,scss,json}\"",
+    "lint:styles": "stylelint \"src/**/*.{css,scss}\"",
+    "lint:styles:fix": "stylelint \"src/**/*.{css,scss}\" --fix"
   },
   "private": true,
   "dependencies": {
@@ -40,6 +42,8 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "prettier": "^3.5.3",
+    "stylelint": "^16.17.0",
+    "stylelint-config-standard-scss": "^14.0.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "8.27.0"
   }
