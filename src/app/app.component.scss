@@ -1,0 +1,29 @@
+nav {
+  background-color: var(--secondary);
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding-block: 8px;
+  margin-bottom: 1rem;
+}
+
+button {
+  background-color: var(--primary);
+  width: 200px;
+  border: 0;
+  color: white;
+  font-size: 16px;
+  border-radius: 4px;
+  padding-inline: 16px;
+  transition: background-color 0.1s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--tertiary);
+  }
+
+  &.active {
+    border: 1px solid var(--stroke);
+  }
+}

@@ -1,5 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { DataService } from './data.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,24 +6,4 @@ import { DataService } from './data.service';
   standalone: false,
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
-  private dataService = inject(DataService);
-  title = 'bend-test-task';
-
-  ngOnInit(): void {
-    this.getAreas();
-    this.getThings();
-  }
-
-  private getAreas() {
-    this.dataService.getAreas().subscribe(areas => {
-      console.log(areas);
-    });
-  }
-
-  private getThings() {
-    this.dataService.getThings().subscribe(things => {
-      console.log(things);
-    });
-  }
-}
+export class AppComponent {}
