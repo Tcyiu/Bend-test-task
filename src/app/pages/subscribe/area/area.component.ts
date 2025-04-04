@@ -24,6 +24,7 @@ export class AreaComponent implements OnInit {
   }
 
   getGroups(): void {
+    // getting unique id's of first things in every group of 2+ things
     const groupsHeads = new Set(
       this.things()
         .filter(thing => thing.joinedWith)
@@ -31,11 +32,13 @@ export class AreaComponent implements OnInit {
         .sort((a, b) => (this.getSkuById(a) < this.getSkuById(b) ? -1 : 1))
     );
 
+    // addings id's for single-thing groups
     this.things().forEach(thing => {
       if (this.isSingle(thing)) groupsHeads.add(+thing.id);
     });
 
     groupsHeads.forEach(groupHead => {
+      // filling group with things, first - head, then other things
       const groupThings: Thing[] = [
         this.things().find(thing => +thing.id === groupHead)!,
         ...this.things().filter(thing => thing.joinedWith === groupHead),
@@ -45,10 +48,12 @@ export class AreaComponent implements OnInit {
     });
   }
 
+  // this fixed problem when group 9-7 was on 6-13's place
   getSkuById(thingId: number): string | 0 {
     return this.things().find(thing => +thing.id === thingId)?.sku || 0;
   }
 
+  // for single-thing groups
   isSingle(thing: Thing): boolean {
     const alreadyFormsGroup = thing.id in this.groups;
     return !alreadyFormsGroup && !thing.joinedWith;
