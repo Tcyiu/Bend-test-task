@@ -1,5 +1,7 @@
-@for (area of areas; track $index) {
-  <div class="area">
-    <p>{{ area.name }}</p>
-  </div>
+@if (areas && things) {
+  @for (area of areas; track $index) {
+    <app-area
+      [area]="area"
+      [things]="getThingsByAreaId(area.areaId)"></app-area>
+  }
 }

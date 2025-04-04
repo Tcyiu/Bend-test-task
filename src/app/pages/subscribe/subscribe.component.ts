@@ -18,17 +18,19 @@ export class SubscribeComponent implements OnInit {
     this.getThings();
   }
 
-  private getAreas() {
+  private getAreas(): void {
     this.dataService.getAreas().subscribe(areas => {
       this.areas = areas;
-      console.log(areas);
     });
   }
 
-  private getThings() {
+  private getThings(): void {
     this.dataService.getThings().subscribe(things => {
       this.things = things;
-      console.log(things);
     });
+  }
+
+  getThingsByAreaId(areaId: number): Thing[] {
+    return this.things!.filter(thing => thing.areaId === areaId);
   }
 }
