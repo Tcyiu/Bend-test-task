@@ -1,4 +1,9 @@
-import { Component, input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  OnInit,
+} from '@angular/core';
 import Area from '../../../interfaces/area.interface';
 import Thing from '../../../interfaces/thing.interface';
 import Group from '../../../interfaces/group.interface';
@@ -7,6 +12,7 @@ import Group from '../../../interfaces/group.interface';
   selector: 'app-area',
   standalone: false,
   templateUrl: './area.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AreaComponent implements OnInit {
   area = input.required<Area>();
