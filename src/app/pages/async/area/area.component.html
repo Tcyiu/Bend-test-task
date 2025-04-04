@@ -1,0 +1,17 @@
+<div class="area">
+  <p>{{ area().name }}</p>
+  <div class="groups">
+    @for (group of groups; track $index) {
+      <div class="group">
+        @for (thing of group.groupThings; track $index) {
+          <div class="thing">
+            <span class="sku">{{ thing.sku }}</span>
+            <span class="default-sku">{{ thing.defaultSku }}</span>
+          </div>
+          <div class="connection"></div>
+          <div class="group-status" [ngClass]="group.groupStatus"></div>
+        }
+      </div>
+    }
+  </div>
+</div>

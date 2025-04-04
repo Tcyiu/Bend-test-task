@@ -1,38 +1,47 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, effect, input } from '@angular/core';
 import Area from '../../../interfaces/area.interface';
 import Thing from '../../../interfaces/thing.interface';
 import Group from '../../../interfaces/group.interface';
 
 @Component({
-  selector: 'app-area',
+  selector: 'app-area-async',
   standalone: false,
   templateUrl: './area.component.html',
 })
-export class AreaComponent implements OnInit {
+export class AreaComponent {
   area = input.required<Area>();
   things = input.required<Thing[]>();
+  thingsOfThisArea: Thing[] = [];
   groups: Group[] = [];
 
-  ngOnInit(): void {
-    this.getGroups();
+  constructor() {
+    effect(() => {
+      if (!this.things()) return;
+      this.thingsOfThisArea = this.things().filter(
+        thing => thing.areaId === this.area().areaId
+      );
+      this.getGroups();
+    });
   }
 
   getGroups(): void {
     const groupsHeads = new Set(
-      this.things()
+      this.thingsOfThisArea
         .filter(thing => thing.joinedWith)
         .map(thing => thing.joinedWith!)
         .sort((a, b) => (this.getSkuById(a) < this.getSkuById(b) ? -1 : 1))
     );
 
-    this.things().forEach(thing => {
+    this.thingsOfThisArea.forEach(thing => {
       if (this.isSingle(thing)) groupsHeads.add(+thing.id);
     });
 
     groupsHeads.forEach(groupHead => {
       const groupThings: Thing[] = [
-        this.things().find(thing => +thing.id === groupHead)!,
-        ...this.things().filter(thing => thing.joinedWith === groupHead),
+        this.thingsOfThisArea.find(thing => +thing.id === groupHead)!,
+        ...this.thingsOfThisArea.filter(
+          thing => thing.joinedWith === groupHead
+        ),
       ];
       const groupStatus = this.getGroupStatus(groupThings);
       this.groups.push({ headThingId: groupHead, groupStatus, groupThings });
@@ -40,7 +49,7 @@ export class AreaComponent implements OnInit {
   }
 
   getSkuById(thingId: number): string | 0 {
-    return this.things().find(thing => +thing.id === thingId)?.sku || 0;
+    return this.thingsOfThisArea.find(thing => +thing.id === thingId)?.sku || 0;
   }
 
   isSingle(thing: Thing): boolean {

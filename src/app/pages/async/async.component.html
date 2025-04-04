@@ -1,5 +1,3 @@
-@for (area of areas; track $index) {
-  <div class="area">
-    <p>{{ area.name }}</p>
-  </div>
+@for (area of areas$ | async; track $index) {
+  <app-area-async [area]="area" [things]="(things$ | async)!"></app-area-async>
 }
